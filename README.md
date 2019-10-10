@@ -18,3 +18,7 @@ const {app, BrowserWindow} = require('electron');
 ```
 
 https://github.com/bojzi/sound-machine-electron-guide/issues/3
+
+## Futher Issues
+
+Further issues will be tracked as GitHub issues in https://github.com/flaschbier/sound-machine-electron/issues/ because it very much looks like it will be tons.
