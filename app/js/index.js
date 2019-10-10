@@ -1,4 +1,5 @@
 'use strict';
+var ipc = require('ipc');
 
 var soundButtons = document.querySelectorAll('.button-sound');
 
@@ -19,3 +20,8 @@ function prepareButton(buttonEl, soundName) {
         audio.play();
     });
 }
+
+var closeEl = document.querySelector('.close');
+closeEl.addEventListener('click', function () {
+    ipc.send('close-main-window');
+});
