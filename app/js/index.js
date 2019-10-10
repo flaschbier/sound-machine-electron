@@ -1,5 +1,5 @@
 'use strict';
-var ipc = require('ipc');
+const { ipcRenderer } = require('electron');
 
 var soundButtons = document.querySelectorAll('.button-sound');
 
@@ -22,6 +22,7 @@ function prepareButton(buttonEl, soundName) {
 }
 
 var closeEl = document.querySelector('.close');
-closeEl.addEventListener('click', function () {
-    ipc.send('close-main-window');
+closeEl.addEventListener('click', (event, args) => {
+    console.log("renderer: close me!");
+    ipcRenderer.send('close-main-window');
 });
