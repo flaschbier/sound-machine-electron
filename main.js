@@ -50,7 +50,7 @@ function setGlobalShortcuts() {
 // react on close button (from renderer)
 
 ipcMain.on('close-main-window', (event, args) => {
-    console.log("main: at your service :3");
+    console.log("main: received close-main-window");
     app.quit();
 });
 
@@ -61,6 +61,7 @@ var settingsWindow = null;
 
 // ipcMain.on('open-settings-window', () => {
 ipcMain.on('open-settings-window', () => {
+    console.log("main: received open-settings-window");
     if (settingsWindow) {
         return;
     }
@@ -79,7 +80,8 @@ ipcMain.on('open-settings-window', () => {
     settingsWindow.loadFile('app/settings.html');
 
     settingsWindow.on('closed', function () {
-        settingsWindow = null;
+      console.log("settingsWindow: received closed");
+      settingsWindow = null;
     });
 });
 
@@ -87,6 +89,7 @@ ipcMain.on('open-settings-window', () => {
 // rect on settings changes
 
 ipcMain.on('set-global-shortcuts', () => {
+    console.log("main: received set-global-shortcuts");
     setGlobalShortcuts();
 });
 
@@ -96,6 +99,7 @@ ipcMain.on('set-global-shortcuts', () => {
 
 // ipc.on('close-settings-window', function () {
 ipcMain.on('close-settings-window', () => {
+    console.log("main: received close-settings-window");
     if (settingsWindow) {
         settingsWindow.close();
     }

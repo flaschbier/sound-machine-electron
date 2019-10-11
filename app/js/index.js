@@ -19,6 +19,7 @@ function prepareButton(buttonEl, soundName) {
 //    var audio = new Audio(__dirname + '/wav/' + soundName + '.wav');
     var audio = new Audio('wav/' + soundName + '.wav');
     buttonEl.addEventListener('click', function () {
+        console.log(`buttonEl ${soundName}: received click`);
         audio.currentTime = 0;
         audio.play();
     });
@@ -29,7 +30,7 @@ function prepareButton(buttonEl, soundName) {
 
 var closeEl = document.querySelector('.close');
 closeEl.addEventListener('click', (event, args) => {
-    console.log("renderer: close me!");
+    console.log("closeEl: received click");
     ipcRenderer.send('close-main-window');
 });
 
@@ -38,8 +39,9 @@ closeEl.addEventListener('click', (event, args) => {
 
 // ipc.on('global-shortcut', function (arg) {
 ipcRenderer.on('global-shortcut', (event, arg) => {
+    console.log(`index: received global-shortcut ${arg}`);
     var event = new MouseEvent('click');
-    console.log(arg);
+    // console.log(arg);
     soundButtons[arg].dispatchEvent(event);
 });
 
@@ -48,5 +50,6 @@ ipcRenderer.on('global-shortcut', (event, arg) => {
 
 var settingsEl = document.querySelector('.settings');
 settingsEl.addEventListener('click', (event, args) => {
+    console.log("settingsEl: received click");
     ipcRenderer.send('open-settings-window');
 });
