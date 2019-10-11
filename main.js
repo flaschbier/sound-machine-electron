@@ -4,7 +4,7 @@ const {app, BrowserWindow, ipcMain, globalShortcut} = require('electron');
 // var ipc = require('ipc');
 // var globalShortcut = require('global-shortcut');
 // const configuration = require('app/js/configuration');
-const configuration = require('app/js/configuration');
+const configuration = require('./app/js/configuration');
 
 
 var mainWindow = null;
@@ -28,6 +28,8 @@ app.on('ready', function() {
 
 //    mainWindow.loadUrl('file://' + __dirname + '/app/index.html');
     mainWindow.loadFile('app/index.html');
+
+    mainWindow.webContents.openDevTools();
 });
 
 
