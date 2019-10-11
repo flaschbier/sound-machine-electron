@@ -3,10 +3,17 @@
 const {app, BrowserWindow, ipcMain, globalShortcut} = require('electron');
 // var ipc = require('ipc');
 // var globalShortcut = require('global-shortcut');
+// const configuration = require('app/js/configuration');
+const configuration = require('app/js/configuration');
+
 
 var mainWindow = null;
 
 app.on('ready', function() {
+    if (!configuration.readSettings('shortcutKeys')) {
+        configuration.saveSettings('shortcutKeys', ['ctrl', 'shift']);
+    }
+
     mainWindow = new BrowserWindow({
       frame: false,
       height: 700,
@@ -17,24 +24,25 @@ app.on('ready', function() {
       }
     });
 
-
-    // register global shortcuts for sound buttons
-
-    // globalShortcut.register('ctrl+shift+1', function () {
-    //     mainWindow.webContents.send('global-shortcut', 0);
-    // });
-    // globalShortcut.register('ctrl+shift+2', function () {
-    //     mainWindow.webContents.send('global-shortcut', 1);
-    // });
-    for (let i=1; i<=4; i++) {
-      globalShortcut.register('ctrl+shift+'+i, function () {
-          mainWindow.webContents.send('global-shortcut', i-1);
-      });
-    }
+    setGlobalShortcuts();
 
 //    mainWindow.loadUrl('file://' + __dirname + '/app/index.html');
     mainWindow.loadFile('app/index.html');
 });
+
+
+// register global shortcuts for sound buttons
+
+function setGlobalShortcuts() {
+  globalShortcut.unregisterAll();
+  var keys = configuration.readSettings('shortcutKeys');
+  var prefix = keys.length === 0 ? '' : keys.join('+') + '+';
+  for (let i=1; i<=4; i++) {
+    globalShortcut.register(prefix+i, () => {
+        mainWindow.webContents.send('global-shortcut', i-1);
+    });
+  }
+}
 
 
 // react on close button (from renderer)
@@ -72,6 +80,14 @@ ipcMain.on('open-settings-window', () => {
         settingsWindow = null;
     });
 });
+
+
+// rect on settings changes
+
+ipcMain.on('set-global-shortcuts', () => {
+    setGlobalShortcuts();
+});
+
 
 
 // close settings window
