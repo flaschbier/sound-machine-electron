@@ -26,3 +26,10 @@ closeEl.addEventListener('click', (event, args) => {
     console.log("renderer: close me!");
     ipcRenderer.send('close-main-window');
 });
+
+// ipcer.on('global-shortcut', function (arg) {
+ipcRenderer.on('global-shortcut', (event, arg) => {
+    var event = new MouseEvent('click');
+    console.log(arg);
+    soundButtons[arg].dispatchEvent(event);
+});
