@@ -1,4 +1,6 @@
 'use strict';
+console.log("index.js: hi.");
+
 const { ipcRenderer } = require('electron');
 
 

@@ -63,6 +63,7 @@ var settingsWindow = null;
 ipcMain.on('open-settings-window', () => {
     console.log("main: received open-settings-window");
     if (settingsWindow) {
+        console.log("already open.")
         return;
     }
 
@@ -78,6 +79,7 @@ ipcMain.on('open-settings-window', () => {
 
 //    settingsWindow.loadUrl('file://' + __dirname + '/app/settings.html');
     settingsWindow.loadFile('app/settings.html');
+    settingsWindow.webContents.openDevTools();
 
     settingsWindow.on('closed', function () {
       console.log("settingsWindow: received closed");

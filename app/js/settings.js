@@ -1,9 +1,12 @@
 'use strict';
+console.log("settings.js: hi.");
+
 
 // var ipc = require('ipc');
 const { ipcRenderer } = require('electron');
-const configuration = require('configuration');
+const configuration = require('./js/configuration');
 
+console.log("settings.js: still alive.");
 
 // handle checkboxes
 
@@ -19,6 +22,8 @@ for (let i = 0; i < modifierCheckboxes.length; i++) {
         bindModifierCheckboxes(e);
     });
 }
+
+console.log("settings.js: gute Nacht.");
 
 function bindModifierCheckboxes(e) {
     var shortcutKeys = configuration.readSettings('shortcutKeys');
